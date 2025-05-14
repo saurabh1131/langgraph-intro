@@ -66,7 +66,10 @@ def query_db(query: str) -> str:
         with session.engine.connect().execution_options(
             isolation_level="READ COMMITTED"
         ) as conn:
+            print(f"Executing query: \n\n{query}\n\n")
             result = conn.execute(text(query))
+            print(f"Result: \n\n{result}\n\n")
+
 
             columns = list(result.keys())
             rows = result.fetchall()

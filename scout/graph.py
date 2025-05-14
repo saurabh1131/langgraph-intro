@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Annotated, List, Generator
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage, AIMessageChunk
 from langgraph.graph.message import add_messages
 from langgraph.graph import StateGraph, START, END
@@ -30,7 +31,8 @@ class Agent:
             self, 
             name: str, 
             tools: List = [query_db, generate_visualization],
-            model: str = "gpt-4.1-mini-2025-04-14", 
+            model: str = "gemini-2.0-flash", #"gpt-4.1-mini-2025-04-14",
+            google_api_key:str = "AIzaSyCvR-EJDDqU881df2CrjgDaQjejttoARXw",
             system_prompt: str = "You are a helpful assistant.",
             temperature: float = 0.1
             ):
@@ -40,8 +42,9 @@ class Agent:
         self.system_prompt = system_prompt
         self.temperature = temperature
         
-        self.llm = ChatOpenAI(
+        self.llm = ChatGoogleGenerativeAI(
             model=self.model,
+            google_api_key=google_api_key,
             temperature=self.temperature
             ).bind_tools(self.tools)
         

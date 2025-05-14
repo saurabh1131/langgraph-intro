@@ -19,3 +19,4 @@ wheels/
 
 # macOS
 .DS_Store
+/venv_langraph_py_3_12/
