@@ -31,7 +31,7 @@ class Agent:
             self, 
             name: str, 
             tools: List = [query_db, generate_visualization],
-            model: str = "gemini-2.0-flash", #"gpt-4.1-mini-2025-04-14",
+            model: str = "gemini-2.0-flash-lite",
             google_api_key:str = "AIzaSyCvR-EJDDqU881df2CrjgDaQjejttoARXw",
             system_prompt: str = "You are a helpful assistant.",
             temperature: float = 0.1
@@ -79,7 +79,7 @@ class Agent:
         builder.add_conditional_edges("chatbot", router, ["tools", END])
         builder.add_edge("tools", "chatbot")
 
-        return builder.compile(checkpointer=MemorySaver())
+        return builder.compile()#checkpointer=MemorySaver())
     
 
     def inspect_graph(self):
